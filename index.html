@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Playing in the Loop</title>
+
+  <style>
+    html {
+      font-size: 150%;
+    }
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 10px;
+    }
+    .result {
+      font-size: 10px;
+      letter-spacing: 4px;
+      padding: 30px;
+      margin: 0px auto 20px;
+      background: beige;
+      width: 700px;
+      height: 300px;
+      text-align: left;
+      word-break: break-all;
+      overflow: scroll;
+    }
+    .buttons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: flex-start;
+      background-color: rgba(255,20,20, 0.7);
+    }
+    .buttons button {
+      font-size: .6em;
+      width: 220px;
+      height: 130px;
+      margin-right: 20px;
+    }
+    .buttons button.marked {
+      height: 25px;
+      border: 1px solid black;
+      background-color: lightgrey;
+    }
+    .explain {
+      color: green;
+      margin: 5px;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>choose mode, press space</h2>
+  <div class="result"></div>
+  <h4 style="color: grey; margin: 0 0 5px;">Execution in loop: f1 calls f2, f2 calls f1 . f2 may update the DOM. </h4>
+  <h4 class="explain">Comparing: update on RAF vs update on Timeout. </h4>
+  <h4 class="explain">Comparing: vanilla key event handling vs. Observables from key events. </h4>
+  <h3>Modes</h3>
+  <div class="buttons">
+    <button onclick='buttonPressed(event)' data-script='5' onkeydown="preventDefault(event)">Controlled loop. <br><br>Observables handle start/stop. <br><br>DOM update on RAF</button>
+    <button onclick='buttonPressed(event)' data-script='1' onkeydown="preventDefault(event)">Continuous loop. <br><br>Listeners handle update flag. <br><br>DOM update on 0-Timeouts</button>
+    <button onclick='buttonPressed(event)' data-script='2' onkeydown="preventDefault(event)">Continuous loop. <br><br>Listeners handle update flag. <br><br>DOM update on RAF</button>
+    <button onclick='buttonPressed(event)' data-script='4' onkeydown="preventDefault(event)">Continuous loop. <br><br>Observables handle update flag. <br><br>DOM update on RAF</button>
+    <button onclick='buttonPressed(event)' data-script='3' onkeydown="preventDefault(event)">No loop, no f1 &amp; f2. <br><br>Simply DOM update when Observables next.</button>
+  </div>
+  <div class="buttons">
+    <button class="marked">1</button>
+    <button class="marked">2</button>
+    <button class="marked">3</button>
+    <button class="marked">4</button>
+    <button class="marked">5</button>
+  </div>
+  <script src="https://unpkg.com/rxjs/bundles/rxjs.umd.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Playing in the Loop</title>
+
+  <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="result-wrapper">
+      <div class="result-num"><small>update calls/sec</small>: <span>0</span></div>
+      <h4 style="color: grey; margin: 0 0 5px;"> DOM update </h4>
+      <form>
+        <input type="radio" id="accum" name="update" value="accumulate" checked>
+        <label for="contactChoice1"><small>accumulate</small></label>
+        <input type="radio" id="replace" name="update" value="replace">
+        <label for="contactChoice2"><small>replace</small></label>
+        <input type="radio" id="nothing" name="update" value="nothing">
+        <label for="contactChoice3"><small>nothing</small></label> 
+      </form>
+      <div class="result"></div>
+    </div>
+    <div class="mode-wrapper">
+      <h2 class="title">choose mode, press 'A'</h2>
+      <div class="buttons">
+        <!-- <button onclick='buttonPressed(event)' data-script='1' onkeydown="preventDefault(event)">f1-f2 loop <br><br>do while flag <br><br>keydown listener callbacks control flag <br><br>update DOM with Timeout</button>
+        <button onclick='buttonPressed(event)' data-script='2' onkeydown="preventDefault(event)">Same as left <br><br>update DOM with RequestAF</button>
+        <div class="clearfix"></div> -->
+        <button onclick='buttonPressed(event)' data-script='3' onkeydown="preventDefault(event)">f1-f2 loop <br><br>do while flag <br><br>observables from keydown control flag <br><br>update DOM with Timeout</button>
+        <!-- <button onclick='buttonPressed(event)' data-script='4' onkeydown="preventDefault(event)">Same as left <br><br>update DOM with RequestAF</button> -->
+        <div class="clearfix"></div>
+        <button onclick='buttonPressed(event)' data-script='5' onkeydown="preventDefault(event)">Subject emits values in f1-f2 loop<br><br>observe values on async scheduler<br><br>DOM update on emitted value</button>
+        <div class="clearfix"></div>
+        <!-- <button onclick='buttonPressed(event)' data-script='6' onkeydown="preventDefault(event)">No loops: Observables from keydown <br><br>sync DOM update on Observale next</button>
+        <button onclick='buttonPressed(event)' data-script='7' onkeydown="preventDefault(event)">No loops: Keydown events <br><br>sync DOM update on callback</button> -->
+      </div>
+    </div>
+    <script src="https://unpkg.com/rxjs/bundles/rxjs.umd.js"></script>
+    <script src="mainHold.js"></script>
+  </div>
+</body>
+</html>

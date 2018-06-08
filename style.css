@@ -1,0 +1,84 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 150%;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 10px;      
+  overflow-x:hidden;
+}
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  perspective: 600px;
+}
+.result-wrapper {
+  height: 90vh;
+  width: 50vw;
+  padding: 20px;
+  position: relative;
+}
+.result-wrapper h4 {
+  display: inline-block;
+}
+.result-wrapper form {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 180px;
+}
+.result {
+  font-size: 10px;
+  letter-spacing: 4px;
+  padding: 30px;
+  margin: 10px 0;
+  background: beige;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  word-break: break-all;
+  overflow: scroll;
+}
+.result-num {
+  position: absolute;
+  left: calc(100% - 200px);
+  top: 25px;
+}
+.mode-wrapper {
+  margin-top: 20px;
+}
+.title {
+  animation: swing 2s ease-in-out infinite;
+  text-align: center;
+}
+@keyframes swing {
+  0%, 100% {transform: rotateY(-3deg);
+  opacity: 1;}
+  50% {transform: rotateY(3deg); opacity: 0.5;}
+}
+
+.buttons {
+  margin-top: 15px;
+  /* background-color: rgba(255,20,20, 0.7); */
+}
+.buttons button {
+  float:left;
+  font-size: .6em;
+  width: 19em;
+  height: 11em;
+  margin: 20px;
+}
+.explain {
+  color: green;
+  margin: 5px;
+  padding: 5px;
+}
+.clearfix {
+  clear: both;
+}

@@ -10,7 +10,7 @@
 <body>
   <div class="wrapper">
     <div class="result-wrapper">
-      <div class="result-num"><small>update calls/sec</small>: <span>0</span></div>
+      <div class="result-num"><small>updates/sec</small>: <span>0</span></div>
       <h4 style="color: grey; margin: 0 0 5px;"> DOM update </h4>
       <form>
         <input type="radio" id="accum" name="update" value="accumulate" checked>
@@ -25,16 +25,16 @@
     <div class="mode-wrapper">
       <h2 class="title">choose mode, press 'A'</h2>
       <div class="buttons">
-        <!-- <button onclick='buttonPressed(event)' data-script='1' onkeydown="preventDefault(event)">f1-f2 loop <br><br>do while flag <br><br>keydown listener callbacks control flag <br><br>update DOM with Timeout</button>
-        <button onclick='buttonPressed(event)' data-script='2' onkeydown="preventDefault(event)">Same as left <br><br>update DOM with RequestAF</button>
+        <!-- <button onclick='buttonPressed(event)' data-script='1'  >f1-f2 loop <br><br>do while flag <br><br>keydown listener callbacks control flag <br><br>update DOM with Timeout</button>
+        <button onclick='buttonPressed(event)' data-script='2'  >Same as left <br><br>update DOM with RequestAF</button>
         <div class="clearfix"></div> -->
-        <button onclick='buttonPressed(event)' data-script='3' onkeydown="preventDefault(event)">f1-f2 loop <br><br>do while flag <br><br>observables from keydown control flag <br><br>update DOM with Timeout</button>
-        <!-- <button onclick='buttonPressed(event)' data-script='4' onkeydown="preventDefault(event)">Same as left <br><br>update DOM with RequestAF</button> -->
+        <button onclick='buttonPressed(event)' data-script='3'  >f1-f2 loop <br><br>do while flag <br><br>observables from keydown control flag <br><br>update DOM with Timeout</button>
+        <!-- <button onclick='buttonPressed(event)' data-script='4'  >Same as left <br><br>update DOM with RequestAF</button> -->
         <div class="clearfix"></div>
-        <button onclick='buttonPressed(event)' data-script='5' onkeydown="preventDefault(event)">Subject emits values in f1-f2 loop<br><br>observe values on async scheduler<br><br>DOM update on emitted value</button>
+        <button onclick='buttonPressed(event)' data-script='5'  >Subject emits values in f1-f2 loop<br><br>observe values on async scheduler<br><br>DOM update on emitted value</button>
         <div class="clearfix"></div>
-        <!-- <button onclick='buttonPressed(event)' data-script='6' onkeydown="preventDefault(event)">No loops: Observables from keydown <br><br>sync DOM update on Observale next</button>
-        <button onclick='buttonPressed(event)' data-script='7' onkeydown="preventDefault(event)">No loops: Keydown events <br><br>sync DOM update on callback</button> -->
+        <!-- <button onclick='buttonPressed(event)' data-script='6'  >No loops: Observables from keydown <br><br>sync DOM update on Observale next</button>
+        <button onclick='buttonPressed(event)' data-script='7'  >No loops: Keydown events <br><br>sync DOM update on callback</button> -->
       </div>
     </div>
     <script src="https://unpkg.com/rxjs/bundles/rxjs.umd.js"></script>

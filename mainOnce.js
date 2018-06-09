@@ -1,5 +1,5 @@
-const { Observable, Subject, ReplaySubject, from, of, range, fromEvent, Scheduler, interval } = rxjs;
-const { map, filter, switchMap, takeUntil, pipe, repeat, take, repeatWhen, observeOn } = rxjs.operators;
+const { Observable, Subject, BehaviorSubject, from, of, range, fromEvent, Scheduler, interval } = rxjs;
+const { map, filter, switchMap, takeUntil, pipe, repeat, take, repeatWhen, observeOn, bufferCount } = rxjs.operators;
 const async = rxjs.asyncScheduler;
 const animationFrame = rxjs.animationFrameScheduler;
 
@@ -22,10 +22,15 @@ const radioReplace = document.querySelector('#replace');
 const scriptStates = []; // anonymous state objects {run: boolean};
 
 // execution anaylitics
-let lastPrintTime = Date.now();
-let lastPrintCount;
 let printed = 0;
-speedReport = interval(1000).subscribe(tick => updateSpeed());
+let printStats$ = new BehaviorSubject({printed: 0, time: Date.now()});
+// emit a snapshot per second
+interval(1000).subscribe(() => printStats$.next({printed: printed, time: Date.now()}));
+// process the snapshots
+printStats$.pipe(
+  bufferCount(2,1), // take last two emitted items
+  map(([last, current]) => speedDiff(last, current)), // compute current speed
+).subscribe(speed => printLog.textContent = speed); // update speed display 
 
 
 function buttonPressed(e) {
@@ -81,7 +86,6 @@ function listenerCBControlLoop(updateMethod) {
 
   const handler1 = (evt) => {
     if (evt.keyCode === actionKeyCode) {
-      evt.preventDefault();
       state.run = !state.run;
       if (state.run) {
         f1();
@@ -119,7 +123,6 @@ function observableControlLoop(updateMethod) {
   }
 
   const sub1 = keydowns$.subscribe((e) => {
-    e.preventDefault();
     state.run = !state.run;
     if (state.run) {
       f1();
@@ -135,43 +138,42 @@ function script_nextingInLoop() {
   scriptStates.push(state);
 
   const keydowns$ = fromEvent(document, 'keydown').pipe(filter(e => e.keyCode === actionKeyCode));
-  let fire$;
-  let fireSub;
+  let fire$ = new Subject();
+  // fire$.pipe(take(100), observeOn(async))
+  const firesub = fire$.pipe(observeOn(async))
+  .subscribe(() => {
+    // console.log('observed');
+    f2();
+  });
+  subscriptions.push(firesub);
+
 
   function f1() {
-    console.log('fire: nexting');
+    // console.log('fire: nexting');
     // debugger;
     fire$.next();
-    Promise.resolve().then(()=>console.log('stack empty'))
+    // Promise.resolve().then(()=>console.log('stack empty'));
   }
   function f2() {
-    if (!state.run) {
-      fireSub.unsubscribe();
-      return;
-    }
-    console.log('updating text');
-    updateText();
-    f1();
+    if (state.run) {
+      // console.log('updating text');
+      updateText();
+      f1();
+    } else return;
   }
 
   const sub1 = keydowns$.subscribe((e) => {
     state.run = !state.run;
     console.log(state.run ? 'going' : 'stopped');
     if (state.run) {
-      fire$ = new Subject();
-      fireSub = fire$.pipe(take(100), observeOn(async))
-        .subscribe(() => {
-          console.log('observed');
-          f2();
-        });
-      f1();
-      e.preventDefault();
-      requestAnimationFrame(() => {
-        console.log('========== painting 1');
-        requestAnimationFrame(() => {
-          console.log('========== painting 2');
-        })
-      });
+      f1(); // start firing
+      // for testing
+      // requestAnimationFrame(() => {
+      //   console.log('========== painting 1');
+      //   requestAnimationFrame(() => {
+      //     console.log('========== painting 2');
+      //   })
+      // });
     }
   });
   subscriptions.push(sub1);
@@ -191,7 +193,6 @@ function script_KeydownObservablesUpdateDOM() {
 function script_KeydownEventsUpdateDOM() {
   const handler1 = (evt) => {
     if (evt.keyCode === actionKeyCode) {
-      evt.preventDefault();
       updateText();
     }
   };
@@ -212,8 +213,7 @@ function reset() {
   display.textContent = '';
   printLog.textContent = '';
   printed = 0;
-  lastPrintCount = 0;
-  lastPrintTime = Date.now();
+  printStats$.next({printed: 0, time: Date.now()}) 
   document.querySelectorAll('button').forEach(b => {
     b.blur();
     b.style.backgroundColor = 'lightgrey';
@@ -225,9 +225,6 @@ function reset() {
 }
 
 // ======= Helpers ======= //
-function preventDefault(e) {
-  e.preventDefault();
-}
 function insertCharacter() {
   return insertCharacters[Math.floor(Math.random() * insertCharacters.length)];
 }
@@ -235,19 +232,10 @@ function updateText() {
   if (radioAccum.checked) {
     display.textContent += insertCharacter();
   } else if (radioReplace.checked) {
-    display.textContent = '!refreshing this text!';
+    display.textContent = '!~~refreshing this text~~!';
   }
   printed++;
-  // if ((Date.now()-lastPrintTime) > 1000) {
-  //   updateSpeed();
-  // }
 }
-function updateSpeed() {
-  console.log('updating');
-  const currentPrintTime = Date.now();
-  timeDiff = (currentPrintTime - lastPrintTime)/1000;
-  printCountDiff = printed - lastPrintCount;
-  printLog.textContent = Math.round(printCountDiff / timeDiff);
-  lastPrintTime = currentPrintTime;
-  lastPrintCount = printed;
+function speedDiff(last, current) {
+  return ((current.printed - last.printed)/(current.time - last.time)*1000).toFixed(2);
 }

@@ -31,7 +31,7 @@ body {
 .result-wrapper form {
   display: inline-block;
   margin-left: 20px;
-  margin-right: 180px;
+  margin-right: 200px;
 }
 .result {
   font-size: 10px;
@@ -47,8 +47,8 @@ body {
 }
 .result-num {
   position: absolute;
-  left: calc(100% - 200px);
-  top: 25px;
+  left: calc(100% - 210px);
+  top: 20px;
 }
 .mode-wrapper {
   margin-top: 20px;

@@ -7,4 +7,4 @@ Some breakpoints are set. Use them to compare how Firefox and Chrome use the asy
 Both browsers can visibly update textContents in DOM nodes without a repaint
 
 # takeaway 2
-The asyncscheduler in Firefox gets a lot more chance to execute between repaints. In scenarios when you rely on asyncScheduler, firefox run be a lot faster.
+The async scheduler implementation in Firefox gets a lot more chances to execute between repaints. In scenarios when you rely on asyncScheduler, firefox may run much faster.

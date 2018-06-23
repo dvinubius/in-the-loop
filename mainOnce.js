@@ -168,12 +168,18 @@ function script_nextingInLoop() {
     if (state.run) {
       f1(); // start firing
       // for testing
-      // requestAnimationFrame(() => {
-      //   console.log('========== painting 1');
-      //   requestAnimationFrame(() => {
-      //     console.log('========== painting 2');
-      //   })
-      // });
+      requestAnimationFrame(() => {
+        console.log('========== 1st paint requestAnimationFrame ');
+        // debugger;
+        requestAnimationFrame(() => {
+          console.log('========== 2nd paint requestAnimationFrame');
+          // debugger;
+          requestAnimationFrame(() => {
+            console.log('========== 3nd paint requestAnimationFrame');
+            debugger;
+          })
+        })
+      });
     }
   });
   subscriptions.push(sub1);
@@ -226,6 +232,7 @@ function reset() {
 
 // ======= Helpers ======= //
 function insertCharacter() {
+  debugger;
   return insertCharacters[Math.floor(Math.random() * insertCharacters.length)];
 }
 function updateText() {
